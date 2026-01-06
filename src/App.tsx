@@ -7,6 +7,14 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Patients from "./pages/Patients";
+import MedicalRecord from "./pages/MedicalRecord";
+import Agenda from "./pages/Agenda";
+import Clinics from "./pages/Clinics";
+import Users from "./pages/Users";
+import Reports from "./pages/Reports";
+import Billing from "./pages/Billing";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
