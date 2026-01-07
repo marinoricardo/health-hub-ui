@@ -54,20 +54,20 @@ import { cn } from "@/lib/utils";
 // Mock patient data
 const patientData = {
   id: "1",
-  name: "Maria Silva Santos",
-  email: "maria.santos@email.com",
-  phone: "(11) 98765-4321",
+  name: "Maria Fernanda Macuácua",
+  email: "maria.macuacua@email.co.mz",
+  phone: "+258 84 123 4567",
   birthDate: "15/05/1985",
   age: 39,
   gender: "Feminino",
-  cpf: "123.456.789-00",
+  nuit: "100123456",
   bloodType: "A+",
-  address: "Rua das Flores, 123, Apt 45",
-  city: "São Paulo",
-  state: "SP",
-  zipCode: "01234-567",
-  emergencyContact: "João Santos",
-  emergencyPhone: "(11) 91234-5678",
+  address: "Av. Eduardo Mondlane, 123, Flat 4",
+  city: "Maputo",
+  province: "Maputo Cidade",
+  postalCode: "1100",
+  emergencyContact: "João Macuácua",
+  emergencyPhone: "+258 82 234 5678",
   photo: null,
   allergies: ["Penicilina", "Dipirona"],
   conditions: ["Hipertensão", "Diabetes Tipo 2"],
@@ -91,11 +91,11 @@ const consultations = [
     id: "1",
     date: "28/01/2025",
     time: "09:00",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     specialty: "Cardiologia",
     type: "Consulta de Rotina",
     status: "completed",
-    notes: "Paciente apresenta pressão controlada. Manter medicação atual. Retorno em 3 meses.",
+    notes: "Paciente apresenta pressão controlada. Manter medicação actual. Retorno em 3 meses.",
     diagnosis: "Hipertensão controlada",
     prescriptions: ["Losartana 50mg - manter"],
   },
@@ -103,7 +103,7 @@ const consultations = [
     id: "2",
     date: "15/12/2024",
     time: "14:30",
-    doctor: "Dra. Ana Costa",
+    doctor: "Dra. Ana Cumbe",
     specialty: "Clínica Geral",
     type: "Retorno",
     status: "completed",
@@ -115,7 +115,7 @@ const consultations = [
     id: "3",
     date: "10/10/2024",
     time: "10:00",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     specialty: "Cardiologia",
     type: "Exame",
     status: "completed",
@@ -130,7 +130,7 @@ const exams = [
     id: "1",
     name: "Hemograma Completo",
     date: "20/01/2025",
-    doctor: "Dra. Ana Costa",
+    doctor: "Dra. Ana Cumbe",
     status: "completed",
     result: "Normal",
     file: "hemograma_20012025.pdf",
@@ -139,16 +139,16 @@ const exams = [
     id: "2",
     name: "Glicemia em Jejum",
     date: "20/01/2025",
-    doctor: "Dra. Ana Costa",
+    doctor: "Dra. Ana Cumbe",
     status: "completed",
     result: "110 mg/dL",
     file: "glicemia_20012025.pdf",
   },
   {
     id: "3",
-    name: "Eletrocardiograma",
+    name: "Electrocardiograma",
     date: "10/10/2024",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     status: "completed",
     result: "Normal",
     file: "ecg_10102024.pdf",
@@ -157,7 +157,7 @@ const exams = [
     id: "4",
     name: "Ecocardiograma",
     date: "05/02/2025",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     status: "scheduled",
     result: null,
     file: null,
@@ -168,7 +168,7 @@ const prescriptions = [
   {
     id: "1",
     date: "28/01/2025",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     medications: [
       { name: "Losartana 50mg", dosage: "1 comprimido pela manhã", duration: "Uso contínuo" },
     ],
@@ -177,7 +177,7 @@ const prescriptions = [
   {
     id: "2",
     date: "15/12/2024",
-    doctor: "Dra. Ana Costa",
+    doctor: "Dra. Ana Cumbe",
     medications: [
       { name: "Metformina 850mg", dosage: "1 comprimido após almoço e jantar", duration: "Uso contínuo" },
     ],
@@ -186,7 +186,7 @@ const prescriptions = [
   {
     id: "3",
     date: "01/11/2024",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     medications: [
       { name: "Amoxicilina 500mg", dosage: "1 comprimido de 8 em 8 horas", duration: "7 dias" },
     ],
@@ -204,21 +204,21 @@ const notes = [
   {
     id: "1",
     date: "28/01/2025",
-    author: "Dr. João Silva",
-    content: "Paciente demonstra boa adesão ao tratamento. Recomendar atividade física moderada.",
+    author: "Dr. António Machava",
+    content: "Paciente demonstra boa adesão ao tratamento. Recomendar actividade física moderada.",
     private: false,
   },
   {
     id: "2",
     date: "15/12/2024",
-    author: "Dra. Ana Costa",
-    content: "Orientar sobre alimentação para controle glicêmico. Evitar carboidratos simples.",
+    author: "Dra. Ana Cumbe",
+    content: "Orientar sobre alimentação para controlo glicémico. Evitar carboidratos simples.",
     private: false,
   },
   {
     id: "3",
     date: "10/10/2024",
-    author: "Dr. João Silva",
+    author: "Dr. António Machava",
     content: "Nota interna: Aguardar resultado de exames complementares.",
     private: true,
   },
@@ -257,7 +257,7 @@ const MedicalRecord = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
           <div className="flex items-start gap-4">
-            <Link to="/dashboard/patients">
+            <Link to="/patients">
               <Button variant="ghost" size="icon">
                 <ArrowLeft className="w-5 h-5" />
               </Button>
@@ -518,7 +518,7 @@ const MedicalRecord = () => {
                       <p className="text-sm text-muted-foreground">Endereço</p>
                       <p className="font-medium">{patientData.address}</p>
                       <p className="text-sm text-muted-foreground">
-                        {patientData.city}, {patientData.state} - {patientData.zipCode}
+                        {patientData.city}, {patientData.province} - {patientData.postalCode}
                       </p>
                     </div>
                   </div>
@@ -530,8 +530,8 @@ const MedicalRecord = () => {
                 <h3 className="font-semibold mb-4">Dados Pessoais</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground">CPF</p>
-                    <p className="font-medium">{patientData.cpf}</p>
+                    <p className="text-sm text-muted-foreground">NUIT</p>
+                    <p className="font-medium">{patientData.nuit}</p>
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Data de Nascimento</p>

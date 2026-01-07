@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Patients from "./pages/Patients";
+import MedicalRecords from "./pages/MedicalRecords";
 import MedicalRecord from "./pages/MedicalRecord";
 import Agenda from "./pages/Agenda";
 import Clinics from "./pages/Clinics";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patients" element={<Patients />} />
+          <Route path="/records" element={<MedicalRecords />} />
           <Route path="/medical-record/:id" element={<MedicalRecord />} />
           <Route path="/agenda" element={<Agenda />} />
           <Route path="/clinics" element={<Clinics />} />
