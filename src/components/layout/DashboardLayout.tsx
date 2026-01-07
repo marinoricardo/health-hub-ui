@@ -29,14 +29,14 @@ interface DashboardLayoutProps {
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-  { icon: Users, label: "Pacientes", path: "/dashboard/patients" },
-  { icon: Calendar, label: "Agenda", path: "/dashboard/agenda" },
-  { icon: FileText, label: "Prontuários", path: "/dashboard/records" },
-  { icon: Building2, label: "Clínicas", path: "/dashboard/clinics" },
-  { icon: UserCog, label: "Utilizadores", path: "/dashboard/users" },
-  { icon: BarChart3, label: "Relatórios", path: "/dashboard/reports" },
-  { icon: CreditCard, label: "Faturação", path: "/dashboard/billing" },
-  { icon: Settings, label: "Configurações", path: "/dashboard/settings" },
+  { icon: Users, label: "Pacientes", path: "/patients" },
+  { icon: Calendar, label: "Agenda", path: "/agenda" },
+  { icon: FileText, label: "Prontuários", path: "/patients" },
+  { icon: Building2, label: "Clínicas", path: "/clinics" },
+  { icon: UserCog, label: "Utilizadores", path: "/users" },
+  { icon: BarChart3, label: "Relatórios", path: "/reports" },
+  { icon: CreditCard, label: "Faturação", path: "/billing" },
+  { icon: Settings, label: "Configurações", path: "/settings" },
 ];
 
 const clinics = [
@@ -145,7 +145,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 ))}
                 <div className="border-t border-border p-2">
                   <Link
-                    to="/dashboard/clinics"
+                    to="/clinics"
                     className="flex items-center justify-center gap-2 p-2 text-sm text-primary hover:bg-primary/5 rounded-lg transition-colors"
                   >
                     <Building2 className="w-4 h-4" />
