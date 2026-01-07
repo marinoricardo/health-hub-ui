@@ -31,17 +31,17 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: Users, label: "Pacientes", path: "/patients" },
   { icon: Calendar, label: "Agenda", path: "/agenda" },
-  { icon: FileText, label: "Prontuários", path: "/patients" },
+  { icon: FileText, label: "Prontuários", path: "/records" },
   { icon: Building2, label: "Clínicas", path: "/clinics" },
   { icon: UserCog, label: "Utilizadores", path: "/users" },
   { icon: BarChart3, label: "Relatórios", path: "/reports" },
-  { icon: CreditCard, label: "Faturação", path: "/billing" },
+  { icon: CreditCard, label: "Facturação", path: "/billing" },
   { icon: Settings, label: "Configurações", path: "/settings" },
 ];
 
 const clinics = [
-  { id: "1", name: "Clínica São Paulo", specialty: "Cardiologia" },
-  { id: "2", name: "Centro Médico Vida", specialty: "Clínica Geral" },
+  { id: "1", name: "Clínica Central Maputo", specialty: "Cardiologia" },
+  { id: "2", name: "Centro Médico Polana", specialty: "Clínica Geral" },
 ];
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {

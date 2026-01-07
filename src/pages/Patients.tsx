@@ -56,104 +56,111 @@ interface Patient {
   birthDate: string;
   age: number;
   gender: string;
-  cpf: string;
+  nuit: string;
   lastVisit: string;
   doctor: string;
   status: "active" | "inactive" | "pending";
   alerts: string[];
   conditions: string[];
+  province: string;
 }
 
 const mockPatients: Patient[] = [
   {
     id: "1",
-    name: "Maria Silva Santos",
-    email: "maria.santos@email.com",
-    phone: "(11) 98765-4321",
+    name: "Maria Fernanda Macuácua",
+    email: "maria.macuacua@email.co.mz",
+    phone: "+258 84 123 4567",
     birthDate: "1985-05-15",
     age: 39,
     gender: "Feminino",
-    cpf: "123.456.789-00",
+    nuit: "100123456",
     lastVisit: "28/01/2025",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     status: "active",
     alerts: ["Alergia a Penicilina"],
     conditions: ["Hipertensão", "Diabetes Tipo 2"],
+    province: "Maputo",
   },
   {
     id: "2",
-    name: "João Carlos Oliveira",
-    email: "joao.oliveira@email.com",
-    phone: "(11) 91234-5678",
+    name: "João Carlos Mondlane",
+    email: "joao.mondlane@email.co.mz",
+    phone: "+258 82 234 5678",
     birthDate: "1978-03-22",
     age: 46,
     gender: "Masculino",
-    cpf: "987.654.321-00",
+    nuit: "100234567",
     lastVisit: "25/01/2025",
-    doctor: "Dra. Ana Costa",
+    doctor: "Dra. Ana Cumbe",
     status: "active",
     alerts: [],
     conditions: ["Colesterol Alto"],
+    province: "Maputo",
   },
   {
     id: "3",
-    name: "Ana Paula Costa",
-    email: "ana.costa@email.com",
-    phone: "(11) 99876-5432",
+    name: "Amélia Cossa Nhantumbo",
+    email: "amelia.cossa@email.co.mz",
+    phone: "+258 86 345 6789",
     birthDate: "1990-11-08",
     age: 34,
     gender: "Feminino",
-    cpf: "456.789.123-00",
+    nuit: "100345678",
     lastVisit: "20/01/2025",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     status: "active",
     alerts: ["Alergia a Ibuprofeno"],
     conditions: ["Asma"],
+    province: "Gaza",
   },
   {
     id: "4",
-    name: "Pedro Henrique Lima",
-    email: "pedro.lima@email.com",
-    phone: "(11) 94567-8901",
+    name: "Pedro Armando Sitoe",
+    email: "pedro.sitoe@email.co.mz",
+    phone: "+258 84 456 7890",
     birthDate: "1965-07-30",
     age: 59,
     gender: "Masculino",
-    cpf: "789.123.456-00",
+    nuit: "100456789",
     lastVisit: "15/01/2025",
-    doctor: "Dra. Carla Mendes",
+    doctor: "Dra. Carla Tembe",
     status: "inactive",
     alerts: ["Condição Cardíaca Crítica"],
     conditions: ["Insuficiência Cardíaca", "Hipertensão"],
+    province: "Inhambane",
   },
   {
     id: "5",
-    name: "Fernanda Rocha",
-    email: "fernanda.rocha@email.com",
-    phone: "(11) 93456-7890",
+    name: "Fátima Rosário Langa",
+    email: "fatima.langa@email.co.mz",
+    phone: "+258 87 567 8901",
     birthDate: "1995-01-12",
     age: 30,
     gender: "Feminino",
-    cpf: "321.654.987-00",
+    nuit: "100567890",
     lastVisit: "10/01/2025",
-    doctor: "Dr. João Silva",
+    doctor: "Dr. António Machava",
     status: "pending",
     alerts: [],
     conditions: [],
+    province: "Sofala",
   },
   {
     id: "6",
-    name: "Carlos Eduardo Souza",
-    email: "carlos.souza@email.com",
-    phone: "(11) 92345-6789",
+    name: "Carlos Eduardo Magaia",
+    email: "carlos.magaia@email.co.mz",
+    phone: "+258 82 678 9012",
     birthDate: "1982-09-05",
     age: 42,
     gender: "Masculino",
-    cpf: "654.987.321-00",
+    nuit: "100678901",
     lastVisit: "05/01/2025",
-    doctor: "Dra. Ana Costa",
+    doctor: "Dra. Ana Cumbe",
     status: "active",
     alerts: [],
     conditions: ["Gastrite"],
+    province: "Maputo",
   },
 ];
 
@@ -175,11 +182,11 @@ const Patients = () => {
     phone: "",
     birthDate: "",
     gender: "",
-    cpf: "",
+    nuit: "",
     address: "",
     city: "",
-    state: "",
-    zipCode: "",
+    province: "",
+    postalCode: "",
     emergencyContact: "",
     emergencyPhone: "",
     bloodType: "",
@@ -192,7 +199,7 @@ const Patients = () => {
     const matchesSearch =
       patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      patient.cpf.includes(searchTerm);
+      patient.nuit.includes(searchTerm);
     const matchesStatus = statusFilter === "all" || patient.status === statusFilter;
     const matchesDoctor = doctorFilter === "all" || patient.doctor === doctorFilter;
     return matchesSearch && matchesStatus && matchesDoctor;
@@ -239,11 +246,11 @@ const Patients = () => {
       phone: "",
       birthDate: "",
       gender: "",
-      cpf: "",
+      nuit: "",
       address: "",
       city: "",
-      state: "",
-      zipCode: "",
+      province: "",
+      postalCode: "",
       emergencyContact: "",
       emergencyPhone: "",
       bloodType: "",
@@ -530,7 +537,7 @@ const Patients = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem asChild>
-                            <Link to={`/dashboard/records/${patient.id}`}>
+                            <Link to={`/medical-record/${patient.id}`}>
                               <Eye className="w-4 h-4 mr-2" />
                               Ver Prontuário
                             </Link>
@@ -677,12 +684,12 @@ const Patients = () => {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="cpf">CPF *</Label>
+                    <Label htmlFor="nuit">NUIT *</Label>
                     <Input
-                      id="cpf"
-                      value={newPatient.cpf}
-                      onChange={(e) => setNewPatient({ ...newPatient, cpf: e.target.value })}
-                      placeholder="000.000.000-00"
+                      id="nuit"
+                      value={newPatient.nuit}
+                      onChange={(e) => setNewPatient({ ...newPatient, nuit: e.target.value })}
+                      placeholder="000000000"
                       required
                     />
                   </div>
@@ -734,21 +741,36 @@ const Patients = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="state">Estado</Label>
-                      <Input
-                        id="state"
-                        value={newPatient.state}
-                        onChange={(e) => setNewPatient({ ...newPatient, state: e.target.value })}
-                        placeholder="UF"
-                      />
+                      <Label htmlFor="province">Província</Label>
+                      <Select
+                        value={newPatient.province}
+                        onValueChange={(value) => setNewPatient({ ...newPatient, province: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccione" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Maputo Cidade">Maputo Cidade</SelectItem>
+                          <SelectItem value="Maputo">Maputo</SelectItem>
+                          <SelectItem value="Gaza">Gaza</SelectItem>
+                          <SelectItem value="Inhambane">Inhambane</SelectItem>
+                          <SelectItem value="Sofala">Sofala</SelectItem>
+                          <SelectItem value="Manica">Manica</SelectItem>
+                          <SelectItem value="Tete">Tete</SelectItem>
+                          <SelectItem value="Zambézia">Zambézia</SelectItem>
+                          <SelectItem value="Nampula">Nampula</SelectItem>
+                          <SelectItem value="Cabo Delgado">Cabo Delgado</SelectItem>
+                          <SelectItem value="Niassa">Niassa</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div>
-                      <Label htmlFor="zipCode">CEP</Label>
+                      <Label htmlFor="postalCode">Código Postal</Label>
                       <Input
-                        id="zipCode"
-                        value={newPatient.zipCode}
-                        onChange={(e) => setNewPatient({ ...newPatient, zipCode: e.target.value })}
-                        placeholder="00000-000"
+                        id="postalCode"
+                        value={newPatient.postalCode}
+                        onChange={(e) => setNewPatient({ ...newPatient, postalCode: e.target.value })}
+                        placeholder="0000"
                       />
                     </div>
                   </div>
