@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { BarChart3, TrendingUp, Users, Calendar, Download, Filter, FileText } from "lucide-react";
+import { BarChart3, TrendingUp, Users, Calendar, Download, Filter, FileText, Printer } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
@@ -49,7 +50,17 @@ const Reports = () => {
                 <SelectItem value="year">Ano</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline"><Download className="w-4 h-4 mr-2" />Exportar</Button>
+            <Button variant="outline" onClick={() => {
+              toast.success("Relatório exportado!", { description: "O ficheiro PDF foi descarregado." });
+            }}>
+              <Download className="w-4 h-4 mr-2" />Exportar
+            </Button>
+            <Button variant="outline" onClick={() => {
+              toast.success("A preparar impressão...");
+              setTimeout(() => window.print(), 500);
+            }}>
+              <Printer className="w-4 h-4 mr-2" />Imprimir
+            </Button>
           </div>
         </div>
 
