@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import {
   Users,
@@ -16,7 +17,6 @@ import {
   Eye,
   Edit,
   Trash2,
-  X,
   FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { PatientQuickView } from "@/components/ui/quick-view-panel";
+import BulkActionsBar from "@/components/ui/bulk-actions-bar";
+import { EmptyPatients, EmptySearch } from "@/components/ui/empty-state";
+import { TableSkeleton } from "@/components/ui/loading-skeleton";
 
 interface Patient {
   id: string;
@@ -165,6 +169,8 @@ const mockPatients: Patient[] = [
 ];
 
 const Patients = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [doctorFilter, setDoctorFilter] = useState<string>("all");
@@ -174,7 +180,23 @@ const Patients = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [patientToDelete, setPatientToDelete] = useState<Patient | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [quickViewPatient, setQuickViewPatient] = useState<Patient | null>(null);
+  const [showQuickView, setShowQuickView] = useState(false);
   const itemsPerPage = 10;
+
+  // Handle URL action params (from Command Palette)
+  useEffect(() => {
+    if (searchParams.get("action") === "new") {
+      setShowNewPatientModal(true);
+    }
+  }, [searchParams]);
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const [newPatient, setNewPatient] = useState({
     name: "",
@@ -231,14 +253,38 @@ const Patients = () => {
   };
 
   const confirmDelete = () => {
-    // Handle delete logic
+    toast.success("Paciente eliminado!", {
+      description: `${patientToDelete?.name} foi removido do sistema.`,
+    });
     setShowDeleteConfirm(false);
     setPatientToDelete(null);
   };
 
+  const handleQuickView = (patient: Patient) => {
+    setQuickViewPatient(patient);
+    setShowQuickView(true);
+  };
+
+  const handleBulkDelete = () => {
+    setShowDeleteConfirm(true);
+  };
+
+  const handleBulkExport = () => {
+    toast.success(`${selectedPatients.length} pacientes exportados!`);
+    setSelectedPatients([]);
+  };
+
+  const handleBulkEmail = () => {
+    toast.success("Email preparado!", {
+      description: `${selectedPatients.length} destinatários adicionados.`,
+    });
+  };
+
   const handleNewPatientSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+    toast.success("Paciente cadastrado!", {
+      description: `${newPatient.name} foi adicionado ao sistema.`,
+    });
     setShowNewPatientModal(false);
     setNewPatient({
       name: "",
@@ -258,6 +304,8 @@ const Patients = () => {
       conditions: "",
       notes: "",
     });
+    // Clear URL params
+    navigate("/patients", { replace: true });
   };
 
   const statusLabels: Record<string, string> = {
@@ -278,11 +326,17 @@ const Patients = () => {
             </p>
           </div>
           <div className="flex gap-3">
-            <Button variant="outline">
+            <Button 
+              variant="outline"
+              onClick={() => {
+                toast.success("Dados exportados!", { description: "Ficheiro CSV descarregado." });
+              }}
+              className="hover-scale"
+            >
               <Download className="w-4 h-4 mr-2" />
               Exportar
             </Button>
-            <Button onClick={() => setShowNewPatientModal(true)}>
+            <Button onClick={() => setShowNewPatientModal(true)} className="hover-scale press-effect">
               <Plus className="w-4 h-4 mr-2" />
               Novo Paciente
             </Button>
@@ -854,9 +908,10 @@ const Patients = () => {
           <DialogHeader>
             <DialogTitle>Confirmar Exclusão</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir o paciente{" "}
-              <strong>{patientToDelete?.name}</strong>? Esta ação não pode ser
-              desfeita.
+              {selectedPatients.length > 1 
+                ? `Tem certeza que deseja excluir ${selectedPatients.length} pacientes? Esta acção não pode ser desfeita.`
+                : <>Tem certeza que deseja excluir o paciente <strong>{patientToDelete?.name}</strong>? Esta acção não pode ser desfeita.</>
+              }
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -869,6 +924,47 @@ const Patients = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Quick View Panel */}
+      <PatientQuickView
+        open={showQuickView}
+        onClose={() => setShowQuickView(false)}
+        patient={quickViewPatient ? {
+          id: quickViewPatient.id,
+          name: quickViewPatient.name,
+          nuit: quickViewPatient.nuit,
+          phone: quickViewPatient.phone,
+          email: quickViewPatient.email,
+          birthDate: quickViewPatient.birthDate,
+          gender: quickViewPatient.gender,
+          status: quickViewPatient.status,
+          allergies: quickViewPatient.alerts,
+          conditions: quickViewPatient.conditions,
+          lastVisit: quickViewPatient.lastVisit,
+        } : null}
+        onEdit={(id) => {
+          setShowQuickView(false);
+          toast.info("Modo de edição", { description: "Funcionalidade disponível com backend." });
+        }}
+        onDelete={(id) => {
+          const patient = mockPatients.find(p => p.id === id);
+          if (patient) handleDelete(patient);
+          setShowQuickView(false);
+        }}
+        onViewRecord={(id) => {
+          setShowQuickView(false);
+          navigate(`/medical-record/${id}`);
+        }}
+      />
+
+      {/* Bulk Actions Bar */}
+      <BulkActionsBar
+        selectedCount={selectedPatients.length}
+        onClear={() => setSelectedPatients([])}
+        onDelete={handleBulkDelete}
+        onExport={handleBulkExport}
+        onEmail={handleBulkEmail}
+      />
     </DashboardLayout>
   );
 };
