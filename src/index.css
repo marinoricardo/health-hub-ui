@@ -157,12 +157,27 @@
   .health-card {
     @apply bg-card rounded-xl border border-border/50 p-6;
     box-shadow: var(--shadow-card);
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .health-card:hover {
     box-shadow: var(--shadow-md);
     @apply border-border;
+    transform: translateY(-1px);
+  }
+
+  /* Interactive Card - stronger hover effect */
+  .health-card-interactive {
+    @apply health-card cursor-pointer;
+  }
+
+  .health-card-interactive:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .health-card-interactive:active {
+    transform: translateY(0);
   }
 
   /* Alert Badges */
@@ -237,7 +252,47 @@
 
   /* Table Row Hover */
   .table-row-interactive {
-    @apply hover:bg-muted/50 cursor-pointer transition-colors;
+    @apply hover:bg-muted/50 cursor-pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .table-row-interactive:hover {
+    @apply bg-muted/50;
+  }
+
+  .table-row-interactive:active {
+    @apply bg-muted/70;
+  }
+
+  /* Clickable elements with scale effect */
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hover-scale {
+    transition: transform 0.15s ease;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  .hover-scale:active {
+    transform: scale(0.98);
+  }
+
+  /* Button press effect */
+  .press-effect {
+    transition: transform 0.1s ease;
+  }
+
+  .press-effect:active {
+    transform: scale(0.97);
   }
 
   /* Metric Card */

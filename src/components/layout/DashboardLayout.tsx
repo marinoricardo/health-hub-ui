@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Activity,
   LayoutDashboard,
@@ -14,14 +14,14 @@ import {
   ChevronDown,
   LogOut,
   Bell,
-  Search,
   Menu,
   X,
   ChevronLeft,
+  Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import CommandPalette from "@/components/ui/command-palette";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -46,12 +46,22 @@ const clinics = [
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [clinicDropdownOpen, setClinicDropdownOpen] = useState(false);
   const [selectedClinic, setSelectedClinic] = useState(clinics[0]);
 
   const isActive = (path: string) => location.pathname === path;
+
+  // Global action handlers for Command Palette
+  const handleNewPatient = () => {
+    navigate("/patients?action=new");
+  };
+
+  const handleNewAppointment = () => {
+    navigate("/agenda?action=new");
+  };
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -216,12 +226,11 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <Menu className="w-6 h-6" />
           </button>
 
-          {/* Search */}
-          <div className="hidden md:flex relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <Input
-              placeholder="Buscar pacientes, consultas..."
-              className="pl-10 bg-muted/50 border-0 focus:bg-background"
+          {/* Command Palette Search */}
+          <div className="hidden md:flex flex-1 max-w-md">
+            <CommandPalette
+              onNewPatient={handleNewPatient}
+              onNewAppointment={handleNewAppointment}
             />
           </div>
 
