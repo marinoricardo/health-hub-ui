@@ -7,11 +7,15 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import TwoFactorModal from "@/components/auth/TwoFactorModal";
+import SessionsModal from "@/components/auth/SessionsModal";
 
 const Settings = () => {
   const [clinicData, setClinicData] = useState({ name: "Clínica São Paulo", email: "contato@clinicasp.com.br", phone: "(11) 3456-7890", address: "Av. Paulista, 1000", city: "São Paulo", state: "SP" });
   const [notifications, setNotifications] = useState({ email: true, sms: false, push: true, reminders: true, marketing: false });
   const [appearance, setAppearance] = useState({ theme: "light", language: "pt-BR", timezone: "America/Sao_Paulo" });
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const [showSessions, setShowSessions] = useState(false);
 
   return (
     <DashboardLayout>
@@ -122,7 +126,7 @@ const Settings = () => {
                 <div className="p-4 rounded-lg bg-muted/30">
                   <div className="flex items-center justify-between">
                     <div><p className="font-medium">Autenticação de Dois Fatores</p><p className="text-sm text-muted-foreground">Adicione uma camada extra de segurança</p></div>
-                    <Button variant="outline">Configurar</Button>
+                    <Button variant="outline" onClick={() => setShowTwoFactor(true)}>Configurar</Button>
                   </div>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/30">
@@ -134,7 +138,7 @@ const Settings = () => {
                 <div className="p-4 rounded-lg bg-muted/30">
                   <div className="flex items-center justify-between">
                     <div><p className="font-medium">Sessões Ativas</p><p className="text-sm text-muted-foreground">Gerencie dispositivos conectados</p></div>
-                    <Button variant="outline">Ver Sessões</Button>
+                    <Button variant="outline" onClick={() => setShowSessions(true)}>Ver Sessões</Button>
                   </div>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/30">
@@ -148,6 +152,10 @@ const Settings = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Modals */}
+      <TwoFactorModal isOpen={showTwoFactor} onClose={() => setShowTwoFactor(false)} />
+      <SessionsModal isOpen={showSessions} onClose={() => setShowSessions(false)} />
     </DashboardLayout>
   );
 };

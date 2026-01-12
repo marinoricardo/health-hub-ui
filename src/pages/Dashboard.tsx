@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import DashboardCharts from "@/components/dashboard/DashboardCharts";
 
 const stats = [
   { 
@@ -155,6 +156,9 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
+
+        {/* Charts Section */}
+        <DashboardCharts />
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-6">

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import { CreditCard, Download, CheckCircle2, AlertCircle, TrendingUp, FileText, ChevronRight } from "lucide-react";
+import { CreditCard, Download, CheckCircle2, AlertCircle, TrendingUp, FileText, ChevronRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import InvoiceModal from "@/components/billing/InvoiceModal";
 
 const currentPlan = { name: "Professional", price: "R$ 399", period: "/mês", patients: { used: 1847, limit: 3000 }, professionals: { used: 7, limit: 10 }, storage: { used: 12.4, limit: 50 } };
 
@@ -21,6 +22,8 @@ const plans = [
 ];
 
 const Billing = () => {
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -29,6 +32,10 @@ const Billing = () => {
             <h1 className="text-2xl md:text-3xl font-bold">Faturação</h1>
             <p className="text-muted-foreground">Gerencie seu plano e pagamentos</p>
           </div>
+          <Button onClick={() => setShowInvoiceModal(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Nova Fatura
+          </Button>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -129,6 +136,9 @@ const Billing = () => {
           </div>
         </div>
       </div>
+
+      {/* Invoice Modal */}
+      <InvoiceModal isOpen={showInvoiceModal} onClose={() => setShowInvoiceModal(false)} />
     </DashboardLayout>
   );
 };

@@ -5,10 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Activity, Mail, Lock, Eye, EyeOff, ArrowRight, Building2 } from "lucide-react";
+import ForgotPasswordModal from "@/components/auth/ForgotPasswordModal";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedClinic, setSelectedClinic] = useState<string | null>(null);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   // Mock clinics for multi-clinic selection
   const userClinics = [
@@ -57,9 +59,13 @@ const Login = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Senha</Label>
-                <a href="#" className="text-sm text-primary hover:underline">
+                <button 
+                  type="button"
+                  onClick={() => setShowForgotPassword(true)}
+                  className="text-sm text-primary hover:underline"
+                >
                   Esqueceu a senha?
-                </a>
+                </button>
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -183,6 +189,12 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      <ForgotPasswordModal 
+        isOpen={showForgotPassword} 
+        onClose={() => setShowForgotPassword(false)} 
+      />
     </div>
   );
 };
