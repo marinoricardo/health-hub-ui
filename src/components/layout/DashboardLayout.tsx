@@ -22,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import CommandPalette from "@/components/ui/command-palette";
+import NotificationCenter from "@/components/ui/notification-center";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -51,7 +52,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [clinicDropdownOpen, setClinicDropdownOpen] = useState(false);
   const [selectedClinic, setSelectedClinic] = useState(clinics[0]);
-
   const isActive = (path: string) => location.pathname === path;
 
   // Global action handlers for Command Palette
@@ -237,10 +237,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           {/* Right Actions */}
           <div className="flex items-center gap-3">
             {/* Notifications */}
-            <button className="relative p-2 rounded-lg hover:bg-muted transition-colors">
-              <Bell className="w-5 h-5 text-muted-foreground" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full" />
-            </button>
+            <NotificationCenter />
 
             {/* Mobile Search */}
             <button className="md:hidden p-2 rounded-lg hover:bg-muted">

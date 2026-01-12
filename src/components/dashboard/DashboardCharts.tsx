@@ -380,3 +380,22 @@ export const QuickMetrics = () => {
     </div>
   );
 };
+
+// Componente principal que agrupa todos os gráficos
+const DashboardCharts = () => {
+  return (
+    <div className="space-y-6">
+      <QuickMetrics />
+      <div className="grid lg:grid-cols-2 gap-6">
+        <ConsultationsChart />
+        <SpecialtyDistributionChart />
+      </div>
+      <div className="grid lg:grid-cols-2 gap-6">
+        <RevenueChart />
+        <OccupancyChart />
+      </div>
+    </div>
+  );
+};
+
+export default DashboardCharts;

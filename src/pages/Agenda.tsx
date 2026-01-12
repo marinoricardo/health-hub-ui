@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import {
   Calendar,
@@ -18,6 +19,8 @@ import {
   CheckCircle2,
   XCircle,
   AlertCircle,
+  Users,
+  Ban,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +48,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import WaitlistPanel from "@/components/agenda/WaitlistPanel";
+import BlockTimeModal from "@/components/agenda/BlockTimeModal";
 
 interface Appointment {
   id: string;
@@ -84,6 +89,7 @@ const timeSlots = [
 ];
 
 const Agenda = () => {
+  const [searchParams] = useSearchParams();
   const [view, setView] = useState<"day" | "week" | "month">("week");
   const [currentDate, setCurrentDate] = useState(new Date(2025, 0, 28));
   const [selectedDoctor, setSelectedDoctor] = useState<string>("all");
@@ -91,6 +97,15 @@ const Agenda = () => {
   const [showAppointmentDetails, setShowAppointmentDetails] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<{ date: string; time: string } | null>(null);
+  const [showWaitlist, setShowWaitlist] = useState(false);
+  const [showBlockTime, setShowBlockTime] = useState(false);
+
+  // Handle URL action params
+  useEffect(() => {
+    if (searchParams.get("action") === "new") {
+      setShowNewAppointment(true);
+    }
+  }, [searchParams]);
 
   const [newAppointment, setNewAppointment] = useState({
     patient: "",
@@ -218,6 +233,14 @@ const Agenda = () => {
                 ))}
               </SelectContent>
             </Select>
+            <Button variant="outline" onClick={() => setShowWaitlist(true)}>
+              <Users className="w-4 h-4 mr-2" />
+              Lista de Espera
+            </Button>
+            <Button variant="outline" onClick={() => setShowBlockTime(true)}>
+              <Ban className="w-4 h-4 mr-2" />
+              Bloquear Horário
+            </Button>
             <Button onClick={() => setShowNewAppointment(true)}>
               <Plus className="w-4 h-4 mr-2" />
               Nova Consulta
@@ -684,6 +707,12 @@ const Agenda = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Waitlist Panel */}
+      <WaitlistPanel isOpen={showWaitlist} onClose={() => setShowWaitlist(false)} />
+
+      {/* Block Time Modal */}
+      <BlockTimeModal isOpen={showBlockTime} onClose={() => setShowBlockTime(false)} />
     </DashboardLayout>
   );
 };

@@ -18,6 +18,7 @@ import {
   Edit,
   Trash2,
   FileText,
+  Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,6 +52,8 @@ import { PatientQuickView } from "@/components/ui/quick-view-panel";
 import BulkActionsBar from "@/components/ui/bulk-actions-bar";
 import { EmptyPatients, EmptySearch } from "@/components/ui/empty-state";
 import { TableSkeleton } from "@/components/ui/loading-skeleton";
+import PatientDetailsModal from "@/components/patients/PatientDetailsModal";
+import ImportPatientsModal from "@/components/patients/ImportPatientsModal";
 
 interface Patient {
   id: string;
@@ -183,6 +186,9 @@ const Patients = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [quickViewPatient, setQuickViewPatient] = useState<Patient | null>(null);
   const [showQuickView, setShowQuickView] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [showPatientDetails, setShowPatientDetails] = useState(false);
+  const [selectedPatientForDetails, setSelectedPatientForDetails] = useState<Patient | null>(null);
   const itemsPerPage = 10;
 
   // Handle URL action params (from Command Palette)
@@ -326,6 +332,14 @@ const Patients = () => {
             </p>
           </div>
           <div className="flex gap-3">
+            <Button 
+              variant="outline"
+              onClick={() => setShowImportModal(true)}
+              className="hover-scale"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              Importar
+            </Button>
             <Button 
               variant="outline"
               onClick={() => {
@@ -964,6 +978,25 @@ const Patients = () => {
         onDelete={handleBulkDelete}
         onExport={handleBulkExport}
         onEmail={handleBulkEmail}
+      />
+
+      {/* Import Modal */}
+      <ImportPatientsModal isOpen={showImportModal} onClose={() => setShowImportModal(false)} />
+
+      {/* Patient Details Modal */}
+      <PatientDetailsModal 
+        isOpen={showPatientDetails} 
+        onClose={() => setShowPatientDetails(false)} 
+        patient={selectedPatientForDetails ? {
+          id: selectedPatientForDetails.id,
+          name: selectedPatientForDetails.name,
+          email: selectedPatientForDetails.email,
+          phone: selectedPatientForDetails.phone,
+          birthDate: selectedPatientForDetails.birthDate,
+          gender: selectedPatientForDetails.gender,
+          conditions: selectedPatientForDetails.conditions,
+          alerts: selectedPatientForDetails.alerts,
+        } : undefined}
       />
     </DashboardLayout>
   );
