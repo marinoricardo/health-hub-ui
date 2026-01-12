@@ -85,13 +85,21 @@ const mockWaitlist: WaitlistItem[] = [
 const WaitlistPanel = ({ isOpen, onClose }: WaitlistPanelProps) => {
   const [waitlist, setWaitlist] = useState<WaitlistItem[]>(mockWaitlist);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newItem, setNewItem] = useState({
+  const [newItem, setNewItem] = useState<{
+    patient: string;
+    phone: string;
+    preferredDate: string;
+    preferredTime: string;
+    specialty: string;
+    priority: "normal" | "urgent";
+    notes: string;
+  }>({
     patient: "",
     phone: "",
     preferredDate: "",
     preferredTime: "",
     specialty: "",
-    priority: "normal" as const,
+    priority: "normal",
     notes: "",
   });
 
