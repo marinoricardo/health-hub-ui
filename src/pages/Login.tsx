@@ -11,6 +11,16 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedClinic, setSelectedClinic] = useState<string | null>(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // Simula login - remover quando integrar backend
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
 
   // Mock clinics for multi-clinic selection
   const userClinics = [
@@ -40,7 +50,7 @@ const Login = () => {
           </div>
 
           {/* Form */}
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleLogin}>
             {/* Email */}
             <div className="space-y-2">
               <Label htmlFor="email">E-mail</Label>
@@ -132,9 +142,9 @@ const Login = () => {
             </div>
 
             {/* Submit */}
-            <Button variant="hero" size="lg" className="w-full">
-              Entrar
-              <ArrowRight className="w-5 h-5 ml-1" />
+            <Button variant="hero" size="lg" className="w-full" disabled={isLoading}>
+              {isLoading ? "Entrando..." : "Entrar"}
+              {!isLoading && <ArrowRight className="w-5 h-5 ml-1" />}
             </Button>
           </form>
 
