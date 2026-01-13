@@ -30,6 +30,8 @@ interface DashboardLayoutProps {
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: Users, label: "Recepção", path: "/reception" },
+  { icon: Activity, label: "Enfermagem", path: "/nurse-station" },
   { icon: Users, label: "Pacientes", path: "/patients" },
   { icon: Calendar, label: "Agenda", path: "/agenda" },
   { icon: FileText, label: "Prontuários", path: "/records" },
