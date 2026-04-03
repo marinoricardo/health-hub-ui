@@ -18,6 +18,8 @@ import {
   X,
   ChevronLeft,
   Search,
+  Pill,
+  DollarSign,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -35,9 +37,11 @@ const menuItems = [
   { icon: Users, label: "Pacientes", path: "/patients" },
   { icon: Calendar, label: "Agenda", path: "/agenda" },
   { icon: FileText, label: "Prontuários", path: "/records" },
+  { icon: Pill, label: "Prescrições", path: "/prescriptions" },
   { icon: Building2, label: "Clínicas", path: "/clinics" },
   { icon: UserCog, label: "Utilizadores", path: "/users" },
   { icon: BarChart3, label: "Relatórios", path: "/reports" },
+  { icon: DollarSign, label: "Financeiro", path: "/finance" },
   { icon: CreditCard, label: "Facturação", path: "/billing" },
   { icon: Settings, label: "Configurações", path: "/settings" },
 ];
