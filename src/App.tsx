@@ -19,6 +19,10 @@ import Billing from "./pages/Billing";
 import Settings from "./pages/Settings";
 import Reception from "./pages/Reception";
 import NurseStation from "./pages/NurseStation";
+import Prescriptions from "./pages/Prescriptions";
+import PatientPortal from "./pages/PatientPortal";
+import Finance from "./pages/Finance";
+import AdminBackoffice from "./pages/AdminBackoffice";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
